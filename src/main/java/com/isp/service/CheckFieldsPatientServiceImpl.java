@@ -9,7 +9,6 @@ import java.util.List;
 @Service
 public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService {
 
-    List<Item>
 
     String genderQuestion = "What is the patient's gender?";
     String genderType = "string";

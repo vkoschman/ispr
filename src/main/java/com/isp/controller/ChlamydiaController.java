@@ -39,9 +39,6 @@ public class ChlamydiaController {
         ChlamydiaPatient chlamydiaPatient = new ChlamydiaPatient(patient.getGender(), patient.getBirthDate(), patient.getId());
         chlamydiaPatientMap.put(patient.getId(), chlamydiaPatient);
 
-        if not chlamydiaPatientMap.get(patient.getId()):
-            chlamydiaPatientMap.update(patient)
-
         Questionnaire questionnaire = checkFieldsPatientService.checkFields(chlamydiaPatientMap.get(patient.getId()), request.getPrefetch().getQuestionnaireResponse());
 
 
