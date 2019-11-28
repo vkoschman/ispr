@@ -1,10 +1,13 @@
 package com.isp.service;
 
 import com.isp.dto.*;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.IntStream;
+
 
 @Service
 public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService {
@@ -19,6 +22,8 @@ public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService 
         Map<String, MedicationPrescription> medicationPrescriptions = chlamydiaPatient.getMedicationPrescriptions();
         Map<String, MedicationTreatment> medicationTreatments = chlamydiaPatient.getMedicationTreatments();
         List rawTypesAreSoBadIknow = new ArrayList();
+        Field[] declaredFields = ChlamydiaPatient.class.getDeclaredFields();
+
         rawTypesAreSoBadIknow.add(gender);
         rawTypesAreSoBadIknow.add(birthDate);
         rawTypesAreSoBadIknow.add(conditions);
@@ -27,11 +32,19 @@ public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService 
         rawTypesAreSoBadIknow.add(diagnosticOrders);
         rawTypesAreSoBadIknow.add(medicationPrescriptions);
         rawTypesAreSoBadIknow.add(medicationTreatments);
-        for (int i=0; i< rawTypesAreSoBadIknow.size(); i++){
+        for (int i = 0; i < rawTypesAreSoBadIknow.size(); i++) {
             if (Objects.isNull(rawTypesAreSoBadIknow.get(i))) {
-                return Optional.of(new Questionnaire(ChlamydiaPatient.questionsMap.get(i).get(0),
-                        Collections.singletonList(new Item(ChlamydiaPatient.questionsMap.get(i).get(0),
-                                ChlamydiaPatient.questionsMap.get(i).get(1)))));
+                if (qr != null && qr.item.get(0) != null) {
+                    declaredFields[i].setAccessible(true);
+                    try {
+                        declaredFields[i].set(chlamydiaPatient, qr.item.get(0).getAnswer().get(0));
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                    return Optional.of(new Questionnaire(ChlamydiaPatient.questionsMap.get(i).get(0),
+                            Collections.singletonList(new Item(ChlamydiaPatient.questionsMap.get(i).get(0),
+                                    ChlamydiaPatient.questionsMap.get(i).get(1)))));
+                }
             }
         }
         return Optional.empty();

@@ -33,7 +33,7 @@ public class ChlamydiaController {
     }
 
     @PostMapping(value = "/requestPatient")
-    @ApiOperation(value = "Get patient's details and return ")
+    @ApiOperation(value = "Get patient's details and return")
     public ResponseEntity<PatientCardDto> getQuestions(@ApiParam(value = "Request form containing info about patient", required = true)
                             @RequestBody final Request request) {
         Patient patient = request.getPrefetch().getPatient();
