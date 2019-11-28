@@ -1,6 +1,9 @@
 package com.isp.controller;
 
 import com.isp.constants.ApiConstant;
+import com.isp.dto.Card;
+import com.isp.dto.ChlamydiaPatient;
+import com.isp.dto.Patient;
 import com.isp.dto.Request;
 import com.isp.service.ChlamydiaService;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -27,17 +30,11 @@ public class ChlamydiaController {
     @ApiOperation(value = "Get patient's details and return ")
     public ResponseEntity<Request> getQuestions(@ApiParam(value = "Request form containing info about patient", required = true)
                             @RequestBody final Request request) {
-        if (chlamydiaService.checkPresenceOfFields(request)){
-            // all necessary fields are present and decision can be made
-            Object decision = chlamydiaService.makeDecision(request);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(new Request()); // когда инфы достаточно отправляем назад пустой json - решение приняли, от них ничего не надо
-        }else{
-            // not enough info, return request back with question
-            // TODO: как и где заполняются поля вопроса?
-            //TODO: засеттить и отправлять
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(request);
-        }
+        Patient patient = request.getPrefetch().getPatient();
+        ChlamydiaPatient chlamydiaPatient = new ChlamydiaPatient(patient.getGender(), patient.getBirthDate(), patient.getId());
+        Card decision = chlamydiaService.makeDecision(chlamydiaPatient);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(request);
     }
 }

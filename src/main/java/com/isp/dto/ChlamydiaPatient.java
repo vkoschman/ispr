@@ -1,6 +1,6 @@
 package com.isp.dto;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public class ChlamydiaPatient extends Patient{
     private String id;
@@ -11,12 +11,12 @@ public class ChlamydiaPatient extends Patient{
     //TODO: Has to remove pregnancy!!!
     public int pregnancy = -1; // Test field
 
-    private HashMap<String, Condition> conditions;
-    private HashMap<String, Observation> observations;
-    private HashMap<String, MedicationTreatment> medicationTreatments;
-    private HashMap<String, MedicationPrescription> medicationPrescriptions;
-    private HashMap<String, DiagnosticOrder> diagnosticOrders;
-    private HashMap<String, DiagnosticReport> diagnosticReports;
+    private Map<String, Condition> conditions;
+    private Map<String, Observation> observations;
+    private Map<String, MedicationTreatment> medicationTreatments;
+    private Map<String, MedicationPrescription> medicationPrescriptions;
+    private Map<String, DiagnosticOrder> diagnosticOrders;
+    private Map<String, DiagnosticReport> diagnosticReports;
     private String procedure;
 
     public ChlamydiaPatient(String gender, String birthDate, String id){
@@ -39,11 +39,11 @@ public class ChlamydiaPatient extends Patient{
         return sexuallyActive;
     }
 
-    public HashMap<String, Observation> getObservations() {
+    public Map<String, Observation> getObservations() {
         return observations;
     }
 
-    public HashMap<String, DiagnosticReport> getDiagnosticReports() {
+    public Map<String, DiagnosticReport> getDiagnosticReports() {
         return diagnosticReports;
     }
 }

@@ -1,3 +1,5 @@
+package com.isp.dto;
+
 public class DiagnosticOrder {
     private String title;
     private String orderedAtTime; // Дата назначения

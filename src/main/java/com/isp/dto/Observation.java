@@ -1,3 +1,5 @@
+package com.isp.dto;
+
 public class Observation {
     private String title; // Дублирует ключ из Map. Например, "Risk Evaluation, Document: Sexually Transmitted Infection"
     private String observedAtTime; // Дата наблюдения

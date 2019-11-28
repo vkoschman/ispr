@@ -1,8 +1,10 @@
+package com.isp.dto;
+
 public class Condition {
     private String title;
     private String effectiveTime; // Дата постановки состояния
 
-    public Observation(String title, String effectiveTime) {
+    public Condition(String title, String effectiveTime) {
         this.title = title;
         this.effectiveTime = effectiveTime;
     }

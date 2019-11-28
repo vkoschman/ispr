@@ -16,7 +16,6 @@ public class QuestionnaireResponse {
     //TODO:
     Object[] contained;
 
-    //TODO: а что с title?
     public QuestionnaireResponse(List<AnswerItem> item) {
         this.item = item;
         this.id = stringQuestionnaireId();

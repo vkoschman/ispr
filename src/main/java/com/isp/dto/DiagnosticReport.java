@@ -1,5 +1,8 @@
+package com.isp.dto;
+
 public class DiagnosticReport {
     private String title;
+    private String aa;
     private String observedAtTime; // Дата проведения
     private String value; // Результат
 
@@ -19,5 +22,13 @@ public class DiagnosticReport {
 
     public String getValue() {
         return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public void setObservedAtTime(String observedAtTime) {
+        this.observedAtTime = observedAtTime;
     }
 }

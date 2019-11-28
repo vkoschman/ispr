@@ -1,3 +1,5 @@
+package com.isp.dto;
+
 public class MedicationPrescription {
     private String title;
     private String reason; // Причина назначения
