@@ -26,7 +26,7 @@ public class ChlamydiaController {
         this.chlamydiaService = chlamydiaService;
     }
 
-    @GetMapping(value = "/requestPatient")
+    @PostMapping(value = "/requestPatient")
     @ApiOperation(value = "Get patient's details and return ")
     public ResponseEntity<Request> getQuestions(@ApiParam(value = "Request form containing info about patient", required = true)
                             @RequestBody final Request request) {
