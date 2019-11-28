@@ -33,6 +33,10 @@ public class Request {
         return prefetch;
     }
 
+    public void setHook(String hook) {
+        this.hook = hook;
+    }
+
 //    public static Request questionRequest(Patient patient, String questionnaireTitle, String questionText, String questionType) {
 //        List<Item> items = new ArrayList<>();
 //        items.add(new Item(questionText, questionType));

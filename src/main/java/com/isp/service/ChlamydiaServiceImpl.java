@@ -1,5 +1,6 @@
 package com.isp.service;
 
+import com.isp.constants.Endpoints;
 import com.isp.dto.Card;
 import com.isp.dto.ChlamydiaPatient;
 import org.springframework.stereotype.Service;
@@ -36,16 +37,16 @@ public class ChlamydiaServiceImpl implements ChlamydiaService {
     }
 
     private boolean hasChlamydiaTest(ChlamydiaPatient p) {
-        return p.getDiagnosticReports().get("Laboratory Test, Result: Chlamydia Screening") != null &&
-                yearsPassed(p.getDiagnosticReports().get("Laboratory Test, Result: Chlamydia Screening").getObservedAtTime()) <= 1 &&
-                p.getDiagnosticReports().get("Laboratory Test, Result: Chlamydia Screening").getValue() != null;
+        return p.getDiagnosticReports().get(Endpoints.CONST_CHL_LAB) != null &&
+                yearsPassed(p.getDiagnosticReports().get(Endpoints.CONST_CHL_LAB).getObservedAtTime()) <= 1 &&
+                p.getDiagnosticReports().get(Endpoints.CONST_CHL_LAB).getValue() != null;
     }
 
     private boolean hasSTIriskFactor(ChlamydiaPatient p) {
         return // p.conditions.get("Risk Evaluation, Document: Sexually Transmitted Infection") != null &&
                 // yearsPassed(p.conditions.get("Risk Evaluation, Document: Sexually Transmitted Infection").effectiveTime) <= 1 ||
-                p.getObservations().get("Risk Evaluation, Document: Sexually Transmitted Infection") != null &&
-                        yearsPassed( p.getObservations().get("Risk Evaluation, Document: Sexually Transmitted Infection").getObservedAtTime()) <= 1;
+                p.getObservations().get(Endpoints.CONST_CHL_LAB) != null &&
+                        yearsPassed( p.getObservations().get(Endpoints.CONST_CHL_LAB).getObservedAtTime()) <= 1;
     }
 
     private boolean inAtRiskAgePopulation(ChlamydiaPatient p) {

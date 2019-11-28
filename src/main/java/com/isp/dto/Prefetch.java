@@ -1,5 +1,8 @@
 package com.isp.dto;
 
+import lombok.Setter;
+
+@Setter
 public class Prefetch {
     private Patient patient;
     private Questionnaire questionnaire;
@@ -20,6 +23,10 @@ public class Prefetch {
 
     public Questionnaire getQuestionnaire() {
         return questionnaire;
+    }
+
+    public void setQuestionnaire(Questionnaire questionnaire) {
+        this.questionnaire = questionnaire;
     }
 
     public QuestionnaireResponse getQuestionnaireResponse() {

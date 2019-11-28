@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
@@ -37,21 +38,18 @@ public class ChlamydiaController {
                             @RequestBody final Request request) {
         Patient patient = request.getPrefetch().getPatient();
         ChlamydiaPatient chlamydiaPatient = new ChlamydiaPatient(patient.getGender(), patient.getBirthDate(), patient.getId());
-        chlamydiaPatientMap.put(patient.getId(), chlamydiaPatient);
+        chlamydiaPatientMap.putIfAbsent(patient.getId(), chlamydiaPatient);
 
-        if not chlamydiaPatientMap.get(patient.getId()):
-            chlamydiaPatientMap.update(patient)
-
-        Questionnaire questionnaire = checkFieldsPatientService.checkFields(chlamydiaPatientMap.get(patient.getId()), request.getPrefetch().getQuestionnaireResponse());
-
-
-        // added condition on returtn card !!! defined type!!!!
-
-
-
-
-        Card decision = chlamydiaService.makeDecision(chlamydiaPatient);
-        PatientCardDto patientCardDto = new PatientCardDto(request, decision);
+        Optional<Questionnaire> questionnaire = checkFieldsPatientService.checkFields(chlamydiaPatientMap.get(patient.getId()),
+                request.getPrefetch().getQuestionnaireResponse());
+        PatientCardDto patientCardDto;
+        if (questionnaire.isPresent()){
+            request.getPrefetch().setQuestionnaire(questionnaire.get());
+            patientCardDto = new PatientCardDto(request, null);
+        }else{
+            Card decision = chlamydiaService.makeDecision(chlamydiaPatient);
+            patientCardDto = new PatientCardDto(request, decision);
+        }
         return ResponseEntity.status(HttpStatus.OK)
                 .body(patientCardDto);
     }
