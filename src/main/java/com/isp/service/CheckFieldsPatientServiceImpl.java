@@ -1,12 +1,15 @@
 package com.isp.service;
 
-import com.isp.dto.Patient;
-import com.isp.dto.Questionnaire;
-import com.isp.dto.Request;
+import com.isp.dto.*;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService {
+
+    List<Item>
 
     String genderQuestion = "What is the patient's gender?";
     String genderType = "string";
@@ -31,7 +34,7 @@ public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService 
     String sexuallyTransmittedInfectionDateQuestion = "When was the patient observed for sexually transmitted infection";
     String sexuallyTransmittedInfectionDateType = "string";
 
-    public Questionnaire checkFields(Request request) {
+    public Questionnaire checkFields(ChlamydiaPatient chlamydiaPatient, QuestionnaireResponse qr) {
         return null;
     }
 

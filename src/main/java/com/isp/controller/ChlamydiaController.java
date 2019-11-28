@@ -2,7 +2,6 @@ package com.isp.controller;
 
 import com.isp.constants.ApiConstant;
 import com.isp.dto.*;
-import com.isp.dto.*;
 import com.isp.service.CheckFieldsPatientService;
 import com.isp.service.ChlamydiaService;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -40,7 +38,11 @@ public class ChlamydiaController {
         Patient patient = request.getPrefetch().getPatient();
         ChlamydiaPatient chlamydiaPatient = new ChlamydiaPatient(patient.getGender(), patient.getBirthDate(), patient.getId());
         chlamydiaPatientMap.put(patient.getId(), chlamydiaPatient);
-        Questionnaire obj = checkFieldsPatientService.checkFields(request);
+
+        if not chlamydiaPatientMap.get(patient.getId()):
+            chlamydiaPatientMap.update(patient)
+
+        Questionnaire questionnaire = checkFieldsPatientService.checkFields(chlamydiaPatientMap.get(patient.getId()), request.getPrefetch().getQuestionnaireResponse());
 
 
         // added condition on returtn card !!! defined type!!!!

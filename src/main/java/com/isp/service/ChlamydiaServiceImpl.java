@@ -28,7 +28,7 @@ public class ChlamydiaServiceImpl implements ChlamydiaService {
     }
 
     private boolean atRiskByAgeGroup(ChlamydiaPatient p) {
-        return p.getAgeInYears() >=16 && p.getAgeInYears() <= 24;
+        return p.age() >=16 && p.age() <= 24;
     }
 
     private boolean hasEvidenceOfSexualActivity(ChlamydiaPatient p) {
