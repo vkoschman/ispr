@@ -9,6 +9,7 @@ public class CDSHooksCardsGeneral {
     }
 
     public static String stringLinkId() {
+        // TODO atomic variable
         return String.format("lId%s", String.valueOf(linkId++));
     }
 }
