@@ -37,9 +37,15 @@ public class Request {
         this.hook = hook;
     }
 
-//    public static Request questionRequest(Patient patient, String questionnaireTitle, String questionText, String questionType) {
-//        List<Item> items = new ArrayList<>();
-//        items.add(new Item(questionText, questionType));
-//        return new Request(new Prefetch(patient, new Questionnaire(questionnaireTitle, items)));
-//    }
+    public void setFhirServer(String fhirServer) {
+        this.fhirServer = fhirServer;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public void setHookInstance(String hookInstance) {
+        this.hookInstance = hookInstance;
+    }
 }
