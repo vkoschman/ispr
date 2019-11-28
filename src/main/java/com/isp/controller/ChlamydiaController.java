@@ -2,6 +2,7 @@ package com.isp.controller;
 
 import com.isp.constants.ApiConstant;
 import com.isp.dto.*;
+import com.isp.dto.*;
 import com.isp.service.CheckFieldsPatientService;
 import com.isp.service.ChlamydiaService;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -14,10 +15,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 @RestController
 @RequestMapping(ApiConstant.API_V_1 + "/chlamydiaTest")
 public class ChlamydiaController {
 
+    public Map<String, ChlamydiaPatient> chlamydiaPatientMap = new ConcurrentHashMap<>();
     private final ChlamydiaService chlamydiaService;
     private final CheckFieldsPatientService checkFieldsPatientService;
 
@@ -29,19 +35,22 @@ public class ChlamydiaController {
 
     @PostMapping(value = "/requestPatient")
     @ApiOperation(value = "Get patient's details and return ")
-    public ResponseEntity<Request> getQuestions(@ApiParam(value = "Request form containing info about patient", required = true)
+    public ResponseEntity<PatientCardDto> getQuestions(@ApiParam(value = "Request form containing info about patient", required = true)
                             @RequestBody final Request request) {
         Patient patient = request.getPrefetch().getPatient();
-        Questionnaire obj = checkFieldsPatientService.checkFields(patient);
+        ChlamydiaPatient chlamydiaPatient = new ChlamydiaPatient(patient.getGender(), patient.getBirthDate(), patient.getId());
+        chlamydiaPatientMap.put(patient.getId(), chlamydiaPatient);
+        Questionnaire obj = checkFieldsPatientService.checkFields(request);
+
 
         // added condition on returtn card !!! defined type!!!!
 
 
 
-        ChlamydiaPatient chlamydiaPatient = new ChlamydiaPatient(patient.getGender(), patient.getBirthDate(), patient.getId());
-        Card decision = chlamydiaService.makeDecision(chlamydiaPatient);
 
+        Card decision = chlamydiaService.makeDecision(chlamydiaPatient);
+        PatientCardDto patientCardDto = new PatientCardDto(request, decision);
         return ResponseEntity.status(HttpStatus.OK)
-                .body(request);
+                .body(patientCardDto);
     }
 }
