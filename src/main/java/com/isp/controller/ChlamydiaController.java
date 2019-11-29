@@ -40,8 +40,13 @@ public class ChlamydiaController {
         ChlamydiaPatient chlamydiaPatient = new ChlamydiaPatient(patient.getGender(), patient.getBirthDate(), patient.getId());
         chlamydiaPatientMap.putIfAbsent(patient.getId(), chlamydiaPatient);
 
-        Optional<Questionnaire> questionnaire = checkFieldsPatientService.checkFields(chlamydiaPatientMap.get(patient.getId()),
-                request.getPrefetch().getQuestionnaireResponse());
+        Optional<Questionnaire> questionnaire = null;
+        try {
+            questionnaire = checkFieldsPatientService.checkFields(chlamydiaPatientMap.get(patient.getId()),
+                    request.getPrefetch().getQuestionnaireResponse());
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
         PatientCardDto patientCardDto;
         if (questionnaire.isPresent()){
             request.getPrefetch().setQuestionnaire(questionnaire.get());

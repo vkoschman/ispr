@@ -31,5 +31,4 @@ public class Questionnaire {
     public List<Item> getItem() {
         return item;
     }
-
 }

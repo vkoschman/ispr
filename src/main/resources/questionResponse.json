@@ -24,21 +24,19 @@
         }
       ]
     },
-    "questionnaireresponse": {
-      "resourceType" : "QuestionnaireResponse",
-      "id" : "questionnaireresponse1",
-      "questionnaire" : "questionnaire/qId0",
-      "status" : "completed",
-      "authored" : "2019-07-18",
-      "item" : [
+    "questionnaireResponse": {
+      "resourceType": "QuestionnaireResponse",
+      "id": "questionnaireresponse1",
+      "questionnaire": "questionnaire/qId0",
+      "status": "completed",
+      "authored": "2019-07-18",
+      "item": [
         {
-          "linkId" : "lId0",
-          "text" : "Is the patient pregnant?",
-          "answer" : [
-            {
-              "valueBoolean" : "True"
-            }
-          ]
+          "linkId": "lId0",
+          "text": "Is the patient pregnant?",
+          "answer": {
+            "valueBoolean": true
+          }
         }
       ]
     }

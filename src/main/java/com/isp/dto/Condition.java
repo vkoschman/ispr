@@ -9,6 +9,10 @@ public class Condition {
         this.effectiveTime = effectiveTime;
     }
 
+    public Condition(String effectiveTime) {
+        this.effectiveTime = effectiveTime;
+    }
+
     public String getTitle() {
         return title;
     }

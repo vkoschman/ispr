@@ -33,20 +33,18 @@ public class ChlamydiaServiceImpl implements ChlamydiaService {
     }
 
     private boolean hasEvidenceOfSexualActivity(ChlamydiaPatient p) {
-        return p.getSexuallyActive() == 1;
+        return p.getSexuallyActive() == Boolean.TRUE;
     }
 
     private boolean hasChlamydiaTest(ChlamydiaPatient p) {
-        return p.getDiagnosticReports().get(Endpoints.CONST_CHL_LAB) != null &&
-                yearsPassed(p.getDiagnosticReports().get(Endpoints.CONST_CHL_LAB).getObservedAtTime()) <= 1 &&
-                p.getDiagnosticReports().get(Endpoints.CONST_CHL_LAB).getValue() != null;
+        return p.getDiagnosticReports() != null &&
+                yearsPassed(p.getDiagnosticReports().getObservedAtTime()) <= 1 &&
+                p.getDiagnosticReports().getValue() != null;
     }
 
     private boolean hasSTIriskFactor(ChlamydiaPatient p) {
-        return // p.conditions.get("Risk Evaluation, Document: Sexually Transmitted Infection") != null &&
-                // yearsPassed(p.conditions.get("Risk Evaluation, Document: Sexually Transmitted Infection").effectiveTime) <= 1 ||
-                p.getObservations().get(Endpoints.CONST_CHL_LAB) != null &&
-                        yearsPassed( p.getObservations().get(Endpoints.CONST_CHL_LAB).getObservedAtTime()) <= 1;
+        return p.getObservations()!= null &&
+                        yearsPassed( p.getObservations().getObservedAtTime()) <= 1;
     }
 
     private boolean inAtRiskAgePopulation(ChlamydiaPatient p) {
