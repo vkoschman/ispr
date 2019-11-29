@@ -19,8 +19,16 @@ public class AnswerItem {
         return linkId;
     }
 
+    public void setLinkId(String linkId) {
+        this.linkId = linkId;
+    }
+
     public String getText() {
         return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public List<Answer> getAnswer() {

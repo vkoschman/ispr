@@ -21,7 +21,7 @@ class SwaggerConfiguration {
                 .build()
                 .apiInfo(
                         new ApiInfoBuilder()
-                                .title("Наш супер-пупер проект))")
+                                .title("CDSHooksCards test project")
                                 .version("1.0-SNAPSHOT")
                                 .build()
                 );

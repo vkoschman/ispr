@@ -1,43 +1,61 @@
 package com.isp.controller;
 
 import com.isp.constants.ApiConstant;
-import com.isp.dto.Request;
+import com.isp.dto.*;
+import com.isp.service.CheckFieldsPatientService;
 import com.isp.service.ChlamydiaService;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.ws.rs.GET;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequestMapping(ApiConstant.API_V_1 + "/chlamydiaTest")
 public class ChlamydiaController {
 
+    public Map<String, ChlamydiaPatient> chlamydiaPatientMap = new ConcurrentHashMap<>();
     private final ChlamydiaService chlamydiaService;
+    private final CheckFieldsPatientService checkFieldsPatientService;
 
     @Autowired
-    public ChlamydiaController(final ChlamydiaService chlamydiaService){
+    public ChlamydiaController(final ChlamydiaService chlamydiaService, final CheckFieldsPatientService checkFieldsPatientService){
         this.chlamydiaService = chlamydiaService;
+        this.checkFieldsPatientService = checkFieldsPatientService;
     }
 
-    @GetMapping(value = "/requestPatient")
-    @ApiOperation(value = "Get patient's details and return ")
-    public ResponseEntity<Request> getQuestions(@ApiParam(value = "Request form containing info about patient", required = true)
+    @PostMapping(value = "/requestPatient")
+    @ApiOperation(value = "Get patient's details and return")
+    public ResponseEntity<PatientCardDto> getQuestions(@ApiParam(value = "Request form containing info about patient", required = true)
                             @RequestBody final Request request) {
-        if (chlamydiaService.checkPresenceOfFields(request)){
-            // all necessary fields are present and decision can be made
-            Object decision = chlamydiaService.makeDecision(request);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(new Request()); // когда инфы достаточно отправляем назад пустой json - решение приняли, от них ничего не надо
-        }else{
-            // not enough info, return request back with question
-            // TODO: как и где заполняются поля вопроса?
-            //TODO: засеттить и отправлять
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(request);
+        Patient patient = request.getPrefetch().getPatient();
+        ChlamydiaPatient chlamydiaPatient = new ChlamydiaPatient(patient.getGender(), patient.getBirthDate(), patient.getId());
+        chlamydiaPatientMap.putIfAbsent(patient.getId(), chlamydiaPatient);
+
+        Optional<Questionnaire> questionnaire = null;
+        try {
+            questionnaire = checkFieldsPatientService.checkFields(chlamydiaPatientMap.get(patient.getId()),
+                    request.getPrefetch().getQuestionnaireResponse());
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
         }
+        PatientCardDto patientCardDto;
+        if (questionnaire.isPresent()){
+            request.getPrefetch().setQuestionnaire(questionnaire.get());
+            patientCardDto = new PatientCardDto(request, null);
+        }else{
+            Card decision = chlamydiaService.makeDecision(chlamydiaPatient);
+            patientCardDto = new PatientCardDto(request, decision);
+        }
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(patientCardDto);
     }
 }

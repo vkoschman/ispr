@@ -14,4 +14,6 @@ public class Endpoints {
     public static final String THEIR_HOOK = "patient-info";
     public static final String THEIR_HOOK_INSTANCE = "1234567890";
     public static final String THEIR_FHIR_SERVER = "http://their_url.com";
+
+    public static final String CONST_CHL_LAB = "Laboratory Test, Result: Chlamydia Screening";
 }
