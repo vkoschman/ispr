@@ -6,6 +6,7 @@ import com.isp.service.CheckFieldsPatientService;
 import com.isp.service.ChlamydiaService;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,19 +35,15 @@ public class ChlamydiaController {
 
     @PostMapping(value = "/requestPatient")
     @ApiOperation(value = "Get patient's details and return")
+    @SneakyThrows
     public ResponseEntity<PatientCardDto> getQuestions(@ApiParam(value = "Request form containing info about patient", required = true)
                             @RequestBody final Request request) {
         Patient patient = request.getPrefetch().getPatient();
         ChlamydiaPatient chlamydiaPatient = new ChlamydiaPatient(patient.getGender(), patient.getBirthDate(), patient.getId());
         chlamydiaPatientMap.putIfAbsent(patient.getId(), chlamydiaPatient);
 
-        Optional<Questionnaire> questionnaire = null;
-        try {
-            questionnaire = checkFieldsPatientService.checkFields(chlamydiaPatientMap.get(patient.getId()),
+        Optional<Questionnaire> questionnaire = checkFieldsPatientService.checkFields(chlamydiaPatientMap.get(patient.getId()),
                     request.getPrefetch().getQuestionnaireResponse());
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
         PatientCardDto patientCardDto;
         if (questionnaire.isPresent()){
             request.getPrefetch().setQuestionnaire(questionnaire.get());

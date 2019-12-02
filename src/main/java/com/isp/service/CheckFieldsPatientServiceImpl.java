@@ -23,6 +23,7 @@ public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService 
         stringMap.put(7, "medicationTreatments");
     }
 
+    @SneakyThrows
     public Optional<Questionnaire> checkFields(ChlamydiaPatient chlamydiaPatient, QuestionnaireResponse qr) {
         String gender = chlamydiaPatient.getGender();
         String birthDate = chlamydiaPatient.getBirthDate();
@@ -35,18 +36,9 @@ public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService 
 
         if (Objects.isNull(gender)) {
             if (qr != null && qr.item.get(0) != null) {
-                Field field = null;
-                try {
-                    field = chlamydiaPatient.getClass().getDeclaredField(stringMap.get(0));
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                }
+                Field field = chlamydiaPatient.getClass().getDeclaredField(stringMap.get(0));
                 field.setAccessible(true);
-                try {
-                    field.set(chlamydiaPatient, qr.item.get(0).getAnswer().get(0));
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
+                field.set(chlamydiaPatient, qr.item.get(0).getAnswer().get(0));
             }else {
                 return Optional.of(new Questionnaire(ChlamydiaPatient.questionsMap.get(0).get(0),
                         Collections.singletonList(new Item(ChlamydiaPatient.questionsMap.get(0).get(0),
@@ -56,18 +48,9 @@ public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService 
 
         if (Objects.isNull(birthDate)) {
             if (qr != null && qr.item.get(0) != null) {
-                Field field = null;
-                try {
-                    field = chlamydiaPatient.getClass().getDeclaredField(stringMap.get(1));
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                }
+                Field field = chlamydiaPatient.getClass().getDeclaredField(stringMap.get(1));
                 field.setAccessible(true);
-                try {
-                    field.set(chlamydiaPatient, qr.item.get(0).getAnswer().get(0));
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
+                field.set(chlamydiaPatient, qr.item.get(0).getAnswer().get(0));
             }else {
                 return Optional.of(new Questionnaire(ChlamydiaPatient.questionsMap.get(1).get(0),
                         Collections.singletonList(new Item(ChlamydiaPatient.questionsMap.get(1).get(0),
@@ -75,21 +58,11 @@ public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService 
             }
         }
 
-
         if (Objects.isNull(conditions)) {
             if (qr != null && qr.item.get(0) != null) {
-                Field field = null;
-                try {
-                    field = chlamydiaPatient.getClass().getDeclaredField(stringMap.get(2));
-                } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
-                }
+                Field field = chlamydiaPatient.getClass().getDeclaredField(stringMap.get(2));
                 field.setAccessible(true);
-                try {
-                    field.set(chlamydiaPatient.getConditions(), qr.item.get(0).getAnswer().stream().filter(Objects::nonNull).findFirst().get());
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
+                field.set(chlamydiaPatient.getConditions(), qr.item.get(0).getAnswer().stream().filter(Objects::nonNull).findFirst().get());
             }else {
                 return Optional.of(new Questionnaire(ChlamydiaPatient.questionsMap.get(2).get(0),
                         Collections.singletonList(new Item(ChlamydiaPatient.questionsMap.get(2).get(0),

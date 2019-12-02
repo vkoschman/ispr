@@ -1,16 +1,16 @@
 package com.isp.dto;
 
-import java.util.Collections;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
+@Getter
+@Setter
 public class Cards {
     private List<Card> cards;
 
     public Cards(List<Card> cards) {
         this.cards = cards;
-    }
-
-    public static Cards cardsResponse(String summary, String detail) {
-        return new Cards(Collections.singletonList(new Card(summary, detail)));
     }
 }

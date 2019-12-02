@@ -1,6 +1,5 @@
 package com.isp.service;
 
-import com.isp.constants.Endpoints;
 import com.isp.dto.Card;
 import com.isp.dto.ChlamydiaPatient;
 import org.springframework.stereotype.Service;

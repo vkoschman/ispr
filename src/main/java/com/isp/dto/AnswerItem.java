@@ -1,8 +1,13 @@
 package com.isp.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 public class AnswerItem {
     private String linkId;
     private String text;
@@ -13,25 +18,5 @@ public class AnswerItem {
         this.text = question;
         this.answer = new ArrayList<>();
         this.answer.add(answer);
-    }
-
-    public String getLinkId() {
-        return linkId;
-    }
-
-    public void setLinkId(String linkId) {
-        this.linkId = linkId;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public List<Answer> getAnswer() {
-        return answer;
     }
 }

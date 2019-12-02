@@ -1,19 +1,13 @@
 package com.isp.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
 public class MedicationTreatment {
     private String title;
     private String performanceTime; // Начало лечения
-
-    public MedicationTreatment(String title, String performanceTime) {
-        this.title = title;
-        this.performanceTime = performanceTime;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getPerformanceTime() {
-        return performanceTime;
-    }
 }
