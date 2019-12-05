@@ -4,14 +4,17 @@ import com.isp.dto.*;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
 public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService {
+
+    private static final List<String> FIELD_NAMES = Arrays.asList("gender", "birthDate",
+            "sexuallyActive","isChlamydiaTest",
+            "testTime","result",
+            "isObserved","observedTime");
+
     @SneakyThrows
     public Optional<Questionnaire> checkFields(ChlamydiaPatient chlamydiaPatient, QuestionnaireResponse qr) {
 
@@ -41,7 +44,7 @@ public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService 
                     }
                     isChosen = true;
                 } else {
-                    return Optional.of(new Questionnaire("fields ".concat(String.valueOf(i)), // TODO name of fields
+                    return Optional.of(new Questionnaire(FIELD_NAMES.get(i), // TODO name of fields
                             Collections.singletonList(new Item(ChlamydiaPatient.questionsMap.get(i).get(0),
                                     ChlamydiaPatient.questionsMap.get(i).get(1)))));
                 }
