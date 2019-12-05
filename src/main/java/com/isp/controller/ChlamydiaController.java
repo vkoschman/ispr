@@ -36,7 +36,7 @@ public class ChlamydiaController {
     @PostMapping(value = "/requestPatient")
     @ApiOperation(value = "Get patient's details and return")
     @SneakyThrows
-    public ResponseEntity<PatientCardDto> getQuestions(@ApiParam(value = "Request form containing info about patient", required = true)
+    public ResponseEntity<Request> getQuestions(@ApiParam(value = "Request form containing info about patient", required = true)
                             @RequestBody final Request request) {
         Patient patient = request.getPrefetch().getPatient();
         ChlamydiaPatient chlamydiaPatient = new ChlamydiaPatient(patient.getGender(), patient.getBirthDate(), patient.getId());
@@ -44,17 +44,16 @@ public class ChlamydiaController {
 
         Optional<Questionnaire> questionnaire = checkFieldsPatientService.checkFields(chlamydiaPatientMap.get(patient.getId()),
                     request.getPrefetch().getQuestionnaireResponse());
-        PatientCardDto patientCardDto;
         if (questionnaire.isPresent()){
             request.getPrefetch().setQuestionnaire(questionnaire.get());
             request.getPrefetch().setQuestionnaireResponse(null);
-            patientCardDto = new PatientCardDto(request, null);
+            request.setCard(null);
         }else{
             Card decision = chlamydiaService.makeDecision(chlamydiaPatient);
             request.getPrefetch().setQuestionnaireResponse(null);
-            patientCardDto = new PatientCardDto(request, decision);
+            request.setCard(decision);
         }
         return ResponseEntity.status(HttpStatus.OK)
-                .body(patientCardDto);
+                .body(request);
     }
 }

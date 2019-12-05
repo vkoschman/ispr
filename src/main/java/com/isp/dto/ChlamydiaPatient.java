@@ -9,18 +9,11 @@ import java.util.*;
 @Setter
 public class ChlamydiaPatient extends Patient {
     private Boolean sexuallyActive;
-//    private Condition conditions;
-//    private Observation observations; TODO wrapper for next fields
     private String observedTime;
     private Boolean isObserved;
-//    private MedicationTreatment medicationTreatments;
-//    private MedicationPrescription medicationPrescriptions;
-//    private DiagnosticOrder diagnosticOrders;
-//    private DiagnosticReport diagnosticReports; TODO wrapper for next fields
     private String testTime;
     private String result;
     private Boolean isChlamydiaTest;
-//    private String procedure;
 
     private List<Object> fields = new ArrayList<>(Collections.nCopies(8, null));
 

@@ -29,10 +29,10 @@ public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService 
                     Answer answer = qr.item.get(0).getAnswer().get(0);
 
                     if (Objects.nonNull(answer.getValueString())) {
-                        listFields.set(i, answer);
+                        listFields.set(i, answer); // TODO set not answer !! set string
                     } else {
                         if (Objects.nonNull(answer.getValueBoolean())) {
-                            listFields.set(i, answer);
+                            listFields.set(i, answer); // TODO set not answer !! set bool
                         } else {
                             if (i == 5) {
                                 listFields.set(i, answer);

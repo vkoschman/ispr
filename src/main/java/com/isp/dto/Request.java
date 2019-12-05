@@ -15,4 +15,5 @@ public class Request {
     private String fhirServer;
     private String user;
     private Prefetch prefetch;
+    private Card card;
 }
