@@ -10,7 +10,6 @@ import lombok.Setter;
 public class Answer {
     private boolean valueBoolean;
     private String valueString;
-    private int valueInteger;
 
     public Answer(boolean valueBoolean){
         this.valueBoolean = valueBoolean;

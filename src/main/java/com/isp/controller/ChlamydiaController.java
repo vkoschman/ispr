@@ -47,9 +47,11 @@ public class ChlamydiaController {
         PatientCardDto patientCardDto;
         if (questionnaire.isPresent()){
             request.getPrefetch().setQuestionnaire(questionnaire.get());
+            request.getPrefetch().setQuestionnaireResponse(null);
             patientCardDto = new PatientCardDto(request, null);
         }else{
             Card decision = chlamydiaService.makeDecision(chlamydiaPatient);
+            request.getPrefetch().setQuestionnaireResponse(null);
             patientCardDto = new PatientCardDto(request, decision);
         }
         return ResponseEntity.status(HttpStatus.OK)
