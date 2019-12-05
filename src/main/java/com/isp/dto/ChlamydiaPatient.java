@@ -75,7 +75,7 @@ public class ChlamydiaPatient extends Patient {
         }
     }
 
-    public boolean arrayToFields() {
+    public void arrayToFields() {
         gender = (String) fields.get(0);
         birthDate = (String) fields.get(1);
         sexuallyActive = (Boolean) fields.get(2);
@@ -84,7 +84,5 @@ public class ChlamydiaPatient extends Patient {
         result = (String) fields.get(5);
         isObserved = (Boolean) fields.get(6);
         observedTime = (String) fields.get(7);
-
-        return false;
     }
 }

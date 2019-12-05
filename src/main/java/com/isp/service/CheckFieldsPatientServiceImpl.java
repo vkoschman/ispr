@@ -21,7 +21,8 @@ public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService 
 
         for (int i= 0; i < listFields.size(); i++) {
             if (Objects.isNull(listFields.get(i))) {
-                if (qr != null && qr.item.get(0) != null && !isChosen) { // TODO get first item
+                if (qr != null && qr.item != null && qr.item.get(0) != null && qr.item.get(0).getAnswer() != null &&
+                        qr.item.get(0).getAnswer().get(0) != null && !isChosen) { // TODO get first item
                     Answer answer = qr.item.get(0).getAnswer().get(0);
 
                     if (Objects.nonNull(answer.getValueString())) {
@@ -30,6 +31,11 @@ public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService 
                         if (Objects.nonNull(answer.getValueBoolean())) {
                             listFields.set(i, answer);
                         } else {
+                            if (i == 5) {
+                                listFields.set(i, answer);
+                                isChosen = true;
+                                continue;
+                            }
                             throw new IllegalArgumentException("Answer must not be null");
                         }
                     }

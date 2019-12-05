@@ -1,5 +1,6 @@
 package com.isp.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 
 import static com.isp.constants.Endpoints.PATIENT_RESOURCE_TYPE;
 
+@AllArgsConstructor
 @Getter
 @Setter
 public class Patient {
@@ -17,12 +19,6 @@ public class Patient {
     protected String gender;
     protected String birthDate;
     private String id;
-
-    public Patient(String gender, String birthDate, String id) {
-        this.gender = gender;
-        this.birthDate = birthDate;
-        this.id = id;
-    }
 
     public int age() {
         return Period.between(LocalDate.parse(birthDate, DateTimeFormatter.ofPattern("yyyy-MM-dd")), LocalDate.now()).getYears();
