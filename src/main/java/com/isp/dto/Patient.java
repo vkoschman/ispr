@@ -14,8 +14,8 @@ import static com.isp.constants.Endpoints.PATIENT_RESOURCE_TYPE;
 public class Patient {
     public static final String resourceType = PATIENT_RESOURCE_TYPE;
     private static boolean active = true;
-    private String gender;
-    private String birthDate;
+    protected String gender;
+    protected String birthDate;
     private String id;
 
     public Patient(String gender, String birthDate, String id) {
