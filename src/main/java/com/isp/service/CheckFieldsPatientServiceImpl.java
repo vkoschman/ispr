@@ -25,6 +25,24 @@ public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService 
 
     @SneakyThrows
     public Optional<Questionnaire> checkFields(ChlamydiaPatient chlamydiaPatient, QuestionnaireResponse qr) {
+
+        boolean isWas = false;
+        List<Object> list = chlamydiaPatient.getFields();
+        for (int i= 0; i < list.size(); i++) {
+            if (Objects.isNull(list.get(i))) {
+                if (qr != null && qr.item.get(0) != null && !isWas) { // TODO id for question
+                    Answer answer = qr.item.get(0).getAnswer().get(0);
+                    list.set(i, answer);
+                    isWas = true;
+                } else {
+                    return Optional.of(new Questionnaire("qweqwe",
+                            Collections.singletonList(new Item(ChlamydiaPatient.questionsMap.get(i).get(0),
+                                    ChlamydiaPatient.questionsMap.get(i).get(1)))));
+                }
+            }
+        }
+
+
         String gender = chlamydiaPatient.getGender();
         String birthDate = chlamydiaPatient.getBirthDate();
         Condition conditions = chlamydiaPatient.getConditions();

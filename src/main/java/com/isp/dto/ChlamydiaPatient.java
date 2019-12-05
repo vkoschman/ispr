@@ -3,16 +3,13 @@ package com.isp.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Getter
 @Setter
 public class ChlamydiaPatient extends Patient {
+//    TODO, fields may be not need, thinking about it
     private Boolean sexuallyActive;
-
     private Condition conditions;
     private Observation observations;
     private MedicationTreatment medicationTreatments;
@@ -20,6 +17,8 @@ public class ChlamydiaPatient extends Patient {
     private DiagnosticOrder diagnosticOrders;
     private DiagnosticReport diagnosticReports;
     private String procedure;
+
+    private List<Object> fields = Arrays.asList(null, null, null, null, null, null, null, null); // TODO how initial equals object to array
 
     public static Map<Integer, List<String>> questionsMap = new HashMap<>();
 

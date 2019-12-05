@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequestMapping(ApiConstant.API_V_1 + "/chlamydiaTest")
 public class ChlamydiaController {
 
-    public Map<String, ChlamydiaPatient> chlamydiaPatientMap = new ConcurrentHashMap<>();
+    private Map<String, ChlamydiaPatient> chlamydiaPatientMap = new ConcurrentHashMap<>();
     private final ChlamydiaService chlamydiaService;
     private final CheckFieldsPatientService checkFieldsPatientService;
 
