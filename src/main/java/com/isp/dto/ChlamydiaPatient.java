@@ -21,13 +21,13 @@ public class ChlamydiaPatient extends Patient {
 
     static {
         questionsMap.put(0, Arrays.asList("What is the patient's gender?", "string"));
-        questionsMap.put(1, Arrays.asList("What is the patient's birthday?", "string")); // TODO format
+        questionsMap.put(1, Arrays.asList("What is the patient's birthday?", "string"));
         questionsMap.put(2, Arrays.asList("Is the patient sexually active?", "boolean"));
         questionsMap.put(3, Arrays.asList("Did the patient take a Chlamydia Screening test?", "boolean"));
         questionsMap.put(4, Arrays.asList("When did the patient take the Chlamydia Screening test?", "string"));
         questionsMap.put(5, Arrays.asList("What was the result of patient's Chlamydia Screening test?", "string"));
-        questionsMap.put(6, Arrays.asList("Was the patient observed for sexually transmitted infection", "boolean"));
-        questionsMap.put(7, Arrays.asList("When was the patient observed for sexually transmitted infection", "string"));
+        questionsMap.put(6, Arrays.asList("Was the patient observed for sexually transmitted infection?", "boolean"));
+        questionsMap.put(7, Arrays.asList("When was the patient observed for sexually transmitted infection?", "string"));
     }
 
     public ChlamydiaPatient(String gender, String birthDate, String id) {
