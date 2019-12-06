@@ -36,7 +36,7 @@ public class ChlamydiaServiceImpl implements ChlamydiaService {
     }
 
     private boolean hasChlamydiaTest(ChlamydiaPatient p) {
-        return p.getIsChlamydiaTest() && yearsPassed(p.getTestTime()) <= 1 && Objects.nonNull(p.getResult()); // TODO can be null???
+        return p.getIsChlamydiaTest() && yearsPassed(p.getTestTime()) <= 1 && Objects.nonNull(p.getResult()); // TODO null is bad as value
     }
 
     private boolean hasSTIriskFactor(ChlamydiaPatient p) {

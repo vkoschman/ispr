@@ -49,7 +49,7 @@ public class ChlamydiaController {
             request.getPrefetch().setQuestionnaireResponse(null);
             request.setCard(null);
         }else{
-            Card decision = chlamydiaService.makeDecision(chlamydiaPatient);
+            Card decision = chlamydiaService.makeDecision(chlamydiaPatientMap.get(patient.getId()));
             request.getPrefetch().setQuestionnaireResponse(null);
             request.setCard(decision);
         }

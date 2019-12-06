@@ -15,7 +15,7 @@
       "item": [
         {
           "linkId": "lId12",
-          "text": "Was the patient observed for sexually transmitted infection",
+          "text": "Was the patient observed for sexually transmitted infection?",
           "type": "boolean"
         }
       ]

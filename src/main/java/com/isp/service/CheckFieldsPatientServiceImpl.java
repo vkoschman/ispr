@@ -29,13 +29,13 @@ public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService 
                     Answer answer = qr.item.get(0).getAnswer().get(0);
 
                     if (Objects.nonNull(answer.getValueString())) {
-                        listFields.set(i, answer); // TODO set not answer !! set string
+                        listFields.set(i, answer.getValueString());
                     } else {
                         if (Objects.nonNull(answer.getValueBoolean())) {
-                            listFields.set(i, answer); // TODO set not answer !! set bool
+                            listFields.set(i, answer.getValueBoolean());
                         } else {
                             if (i == 5) {
-                                listFields.set(i, answer);
+                                listFields.set(i, null);
                                 isChosen = true;
                                 continue;
                             }
@@ -44,7 +44,7 @@ public class CheckFieldsPatientServiceImpl implements CheckFieldsPatientService 
                     }
                     isChosen = true;
                 } else {
-                    return Optional.of(new Questionnaire(FIELD_NAMES.get(i), // TODO name of fields
+                    return Optional.of(new Questionnaire(FIELD_NAMES.get(i),
                             Collections.singletonList(new Item(ChlamydiaPatient.questionsMap.get(i).get(0),
                                     ChlamydiaPatient.questionsMap.get(i).get(1)))));
                 }

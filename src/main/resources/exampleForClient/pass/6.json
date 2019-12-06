@@ -15,7 +15,7 @@
       "item": [
         {
           "linkId": "lId15",
-          "text": "When was the patient observed for sexually transmitted infection",
+          "text": "When was the patient observed for sexually transmitted infection?",
           "type": "string"
         }
       ]
@@ -31,7 +31,7 @@
           "linkId": "lId15",
           "text": "When was the patient observed for sexually transmitted infection?",
           "answer": {
-            "valueString": "2015-07-18"
+            "valueString": "2019-07-18"
           }
         }
       ]
