@@ -1,7 +1,12 @@
 package com.isp.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import static com.isp.dto.CDSHooksCardsGeneral.stringLinkId;
 
+@Getter
+@Setter
 public class Item {
     private String linkId;
     private String text;
@@ -11,17 +16,5 @@ public class Item {
         this.linkId = stringLinkId();
         this.text = text;
         this.type = type;
-    }
-
-    public String getLinkId() {
-        return linkId;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public String getType() {
-        return type;
     }
 }

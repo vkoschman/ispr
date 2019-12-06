@@ -1,6 +1,5 @@
 package com.isp.service;
 
-import com.isp.constants.Endpoints;
 import com.isp.dto.Card;
 import com.isp.dto.ChlamydiaPatient;
 import org.springframework.stereotype.Service;
@@ -37,14 +36,11 @@ public class ChlamydiaServiceImpl implements ChlamydiaService {
     }
 
     private boolean hasChlamydiaTest(ChlamydiaPatient p) {
-        return p.getDiagnosticReports() != null &&
-                yearsPassed(p.getDiagnosticReports().getObservedAtTime()) <= 1 &&
-                p.getDiagnosticReports().getValue() != null;
+        return p.getIsChlamydiaTest() && yearsPassed(p.getTestTime()) <= 1 && Objects.nonNull(p.getResult()); // TODO null is bad as value
     }
 
     private boolean hasSTIriskFactor(ChlamydiaPatient p) {
-        return p.getObservations()!= null &&
-                        yearsPassed( p.getObservations().getObservedAtTime()) <= 1;
+        return p.getIsObserved() && yearsPassed(p.getObservedTime()) <= 1;
     }
 
     private boolean inAtRiskAgePopulation(ChlamydiaPatient p) {
@@ -61,6 +57,7 @@ public class ChlamydiaServiceImpl implements ChlamydiaService {
 
     @Override
     public Card makeDecision(ChlamydiaPatient patient) {
+        patient.arrayToFields();
         return inAgeAndOtherAtRiskPopulation(patient) ?
                 new Card(testProposal, atRiskByAgeMessage) : new Card(noTestProposal, notAtRiskByAgeMessage);
     }

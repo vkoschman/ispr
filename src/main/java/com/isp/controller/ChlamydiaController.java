@@ -6,6 +6,7 @@ import com.isp.service.CheckFieldsPatientService;
 import com.isp.service.ChlamydiaService;
 import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequestMapping(ApiConstant.API_V_1 + "/chlamydiaTest")
 public class ChlamydiaController {
 
-    public Map<String, ChlamydiaPatient> chlamydiaPatientMap = new ConcurrentHashMap<>();
+    private Map<String, ChlamydiaPatient> chlamydiaPatientMap = new ConcurrentHashMap<>();
     private final ChlamydiaService chlamydiaService;
     private final CheckFieldsPatientService checkFieldsPatientService;
 
@@ -34,28 +35,25 @@ public class ChlamydiaController {
 
     @PostMapping(value = "/requestPatient")
     @ApiOperation(value = "Get patient's details and return")
-    public ResponseEntity<PatientCardDto> getQuestions(@ApiParam(value = "Request form containing info about patient", required = true)
+    @SneakyThrows
+    public ResponseEntity<Request> getQuestions(@ApiParam(value = "Request form containing info about patient", required = true)
                             @RequestBody final Request request) {
         Patient patient = request.getPrefetch().getPatient();
         ChlamydiaPatient chlamydiaPatient = new ChlamydiaPatient(patient.getGender(), patient.getBirthDate(), patient.getId());
         chlamydiaPatientMap.putIfAbsent(patient.getId(), chlamydiaPatient);
 
-        Optional<Questionnaire> questionnaire = null;
-        try {
-            questionnaire = checkFieldsPatientService.checkFields(chlamydiaPatientMap.get(patient.getId()),
+        Optional<Questionnaire> questionnaire = checkFieldsPatientService.checkFields(chlamydiaPatientMap.get(patient.getId()),
                     request.getPrefetch().getQuestionnaireResponse());
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-        PatientCardDto patientCardDto;
         if (questionnaire.isPresent()){
             request.getPrefetch().setQuestionnaire(questionnaire.get());
-            patientCardDto = new PatientCardDto(request, null);
+            request.getPrefetch().setQuestionnaireResponse(null);
+            request.setCard(null);
         }else{
-            Card decision = chlamydiaService.makeDecision(chlamydiaPatient);
-            patientCardDto = new PatientCardDto(request, decision);
+            Card decision = chlamydiaService.makeDecision(chlamydiaPatientMap.get(patient.getId()));
+            request.getPrefetch().setQuestionnaireResponse(null);
+            request.setCard(decision);
         }
         return ResponseEntity.status(HttpStatus.OK)
-                .body(patientCardDto);
+                .body(request);
     }
 }
